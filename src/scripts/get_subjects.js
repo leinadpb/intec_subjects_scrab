@@ -17,7 +17,7 @@ const start = async () => {
     });
     const page = await browser.newPage();
     await page.goto(baseURL);
-    await page.waitForSelector('#txtID', { timeout: 1000 });
+    await page.waitForSelector('#txtID', { timeout: 5000 });
 
     const body = await page.evaluate((user, password) => {
       document.querySelector('#txtID').value = user;
@@ -28,7 +28,7 @@ const start = async () => {
     
     setTimeout(async () => {
       await page.goto(ofertaURL);
-      await page.waitForSelector('#content-oferta', { timeout: 1000 });
+      await page.waitForSelector('#content-oferta', { timeout: 5000 });
 
       const ofertaAcademica = await page.evaluate(() => {
         const areas = 5;
