@@ -8,7 +8,13 @@ const ofertaURL = 'https://procesos.intec.edu.do/OfertaAcademica/Index';
 
 const start = async () => {
   try {
-    const browser = await puppeteer.launch({headless: true});
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+      ],
+    });
     const page = await browser.newPage();
     await page.goto(baseURL);
     await page.waitForSelector('#txtID', { timeout: 1000 });
