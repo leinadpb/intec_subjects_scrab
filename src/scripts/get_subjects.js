@@ -55,12 +55,15 @@ const start = async () => {
               for(let j = 0; j < rows.length; j++) {
                 let row = rows[j].children;
                 let rowResult = {
-                  type: row[0].innerText,
-                  section: row[1].innerText,
-                  room: row[2].innerText,
+                  type: row[0].innerText, // type
+                  section: row[1].innerText, // seciton
+                  room: row[2].innerText, // room
                   teacher: row[3].innerText
                 }
-                rowResults.push(rowResult);
+                // GET SUBJECTS ONLY BEING IMPARTED IN THE FD4xx (wichc corresponds to the LABTI - INTEC)
+                if(row[2].innerText.toString().toLowerCase().substr(0, 3) === "fd4") {
+                  rowResults.push(rowResult);
+                }
               }
             }
 
