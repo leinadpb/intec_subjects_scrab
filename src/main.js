@@ -28,6 +28,6 @@ app.post('/update-subjects', (req, res) => {
 // connect to DB
 require('./helpers/connect_db')
 
-app.listen(8700, () =>
+app.listen(process.env.PORT || 8700, () =>
   console.log('App started at port 8700')
 );
