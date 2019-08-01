@@ -16,7 +16,7 @@ app.post('/update-subjects', (req, res) => {
     } else {
       // Sorry, you're not allowed
       res.status(401);
-      res.send('Sorry, you\'re not allowd to execute this script.');
+      res.send('Sorry, you\'re not allowed to execute this script.');
     }
   } else {
     // Bad request, please provide the authorization key
