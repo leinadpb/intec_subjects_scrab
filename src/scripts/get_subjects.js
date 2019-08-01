@@ -54,6 +54,7 @@ const start = async () => {
               let rows = tableChildren[teachersTableIndex].querySelector('tr td table tbody').children;
               for(let j = 0; j < rows.length; j++) {
                 let row = rows[j].children;
+                
                 let rowResult = {
                   type: row[0].innerText, // type
                   section: row[1].innerText, // seciton
@@ -61,22 +62,25 @@ const start = async () => {
                   teacher: row[3].innerText
                 }
                 // GET SUBJECTS ONLY BEING IMPARTED IN THE FD4xx (wichc corresponds to the LABTI - INTEC)
-                if(row[2].innerText.toString().toLowerCase().substr(0, 3) === "fd4") {
+                if(!!row[2].innerText && row[2].innerText.toString().toLowerCase().substr(0, 3) === "fd4") {
                   rowResults.push(rowResult);
                 }
               }
             }
 
-            results.push({
-              subjectTitle: subjectTitle,
-              subjectCredits: subjectCredits,
-              teachers: rowResults.map(x => x.teacher).filter(unique),
-            });
+            if (rowResults.length > 0) {
+              results.push({
+                subjectTitle: subjectTitle,
+                subjectCredits: subjectCredits,
+                teachers: rowResults.map(x => x.teacher).filter(unique),
+                rooms: rowResults.map(x => x.room).filter(unique),
+              });
+            }
           }
         }
         return results;
       });
-
+      console.log('Primary data >>', ofertaAcademica);
       // Save ofertaAcademica in MongoDB
       let updatedSubjects = ofertaAcademica.map(s => {
         return {
@@ -86,7 +90,7 @@ const start = async () => {
           teacherAssigned: s.teachers.join(';')
         }
       })
-      console.log(updatedSubjects);
+      // console.log(updatedSubjects);
       await QUERIES.removeAllSubjects();
       await QUERIES.addSubjects(updatedSubjects);
       // close browser
